@@ -17,6 +17,18 @@ func ConnectProducer(kafkaBrokerUrl string) *kafka.Writer {
 	return w
 }
 
+func ConnectConsumer(kafkaBrokerUrl, topic string) *kafka.Reader {
+	r := kafka.NewReader(kafka.ReaderConfig{
+		Brokers:  []string{kafkaBrokerUrl},
+		GroupID:  "kafka_demo",
+		Topic:    topic,
+		MinBytes: 10e3, // 10KB
+		MaxBytes: 10e6, // 10MB
+	})
+
+	return r
+}
+
 func PushToQueue(kafkaBrokerUrl string, clientId string, topic string, message string) error {
 	producer := ConnectProducer(kafkaBrokerUrl)
 	defer producer.Close()
