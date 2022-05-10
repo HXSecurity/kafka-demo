@@ -6,19 +6,16 @@ import (
 
 	_ "github.com/HXSecurity/DongTai-agent-go/run/base"
 	_ "github.com/HXSecurity/DongTai-agent-go/run/http"
+	_ "github.com/HXSecurity/DongTai-agent-go/run/kafkaGo"
 	"github.com/sirupsen/logrus"
 
-	"kafkademo/kafka"
+	"kafkademo/kafka_go"
 )
 
 func main() {
 	// connect to kafka: x.x.x.x:9092
-	kafkaBroker := []string{os.Getenv("KAFKA_BROKER")}
-	kafkaProducer, errConnection := kafka.ConnectProducer(kafkaBroker)
-	if errConnection != nil {
-		logrus.Printf("error: %s", "Unable to configure kafka")
-		return
-	}
+	kafkaBroker := os.Getenv("KAFKA_BROKER")
+	kafkaProducer := kafka_go.ConnectProducer(kafkaBroker)
 	defer kafkaProducer.Close()
 
 	kafkaClientId := os.Getenv("KAFKA_CLIENT")
@@ -35,7 +32,7 @@ func main() {
 			return
 		}
 
-		err := kafka.PushToQueue(kafkaBroker, kafkaClientId, kafkaTopic, message)
+		err := kafka_go.PushToQueue(kafkaBroker, kafkaClientId, kafkaTopic, message)
 		if err != nil {
 			logrus.Errorf("error while push message into kafka: %s", err)
 			response(writer, "failed")
