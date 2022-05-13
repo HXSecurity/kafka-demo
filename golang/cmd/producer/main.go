@@ -19,13 +19,15 @@ func main() {
 	defer kafkaProducer.Close()
 
 	kafkaClientId := os.Getenv("KAFKA_CLIENT")
-	kafkaTopic := os.Getenv("KAFKA_TOPIC")
-	if kafkaTopic == "" {
-		kafkaTopic = "addUserV2"
-	}
 
 	http.HandleFunc("/kafka/publish", func(writer http.ResponseWriter, request *http.Request) {
 		values := request.URL.Query()
+
+		kafkaTopic := values.Get("topic")
+		if kafkaTopic == "" {
+			kafkaTopic = "addUserV2"
+		}
+
 		message := values.Get("message")
 		if message == "" {
 			response(writer, "parameter message is required")
