@@ -30,7 +30,7 @@ services:
         environment:
         - dongtai_name=java-kafka
         volumes:
-        - "./agent.jar:/opt/agent.jar"
+        - "./dongtai-agent.jar:/opt/agent.jar"
         depends_on:
         - kafka
         ports:
