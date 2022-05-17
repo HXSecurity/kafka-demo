@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"net/http"
 	"os"
 
@@ -42,6 +43,15 @@ func main() {
 		}
 
 		response(writer, "ok")
+	})
+
+	http.HandleFunc("/kafka", func(writer http.ResponseWriter, request *http.Request) {
+		f, err := ioutil.ReadFile("./index.html")
+		if err != nil {
+			writer.Write([]byte(err.Error()))
+		} else {
+			writer.Write(f)
+		}
 	})
 
 	logrus.Infoln("listening on port 8811")

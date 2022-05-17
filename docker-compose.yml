@@ -28,7 +28,7 @@ services:
         container_name: java
         restart: always
         environment:
-        - dongtai_name=java-kafka
+        - dongtai_name=java-kafka-test
         volumes:
         - "./dongtai-agent.jar:/opt/agent.jar"
         depends_on:
@@ -45,6 +45,7 @@ services:
         entrypoint: ["./producer"]
         volumes:
         - "./dongtai-go-agent-config.yaml:/dongtai/dongtai-go-agent-config.yaml"
+        - "./golang/index.html:/dongtai/index.html"
         depends_on:
         - kafka
         - java-service

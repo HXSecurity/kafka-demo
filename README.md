@@ -27,3 +27,9 @@ Go 生产者 -> Java 消费者
 
 * `Runtime.exec()`: http://localhost:8811/kafka/publish?message=whoami
 * `ProcessBuilder.start()`: http://localhost:8811/kafka/publish?message=whoami&topic=addUserV3
+
+Web 页面
+
+http://127.0.0.1:8811/kafka
+
+> 如果非本机访问靶场： 项目根目录执行 `sed -i "s#127.0.0.1#服务实际地址#g" golang/index.html`

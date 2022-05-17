@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh_ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+        }
+        h1{
+            text-align: center;
+        }
+        table{
+            border:1px solid #ccc;
+            border-collapse:collapse; /*边框合并*/
+            width:900px;
+        }
+        tr.odd{ /*表格的奇数列的样式*/
+            background-color:#f8f8f8;
+        }
+        tr.head{ /*表头的下边框*/
+            border-bottom-width: 2px;
+            background: #aaa;
+        }
+        u{
+            cursor: pointer;
+        }
+        tr{
+            border-bottom-style: solid; /*底部为实线*/
+            border-bottom-width: 1px;/*底部宽度为1px*/
+            border-bottom-color: lightgray; /*底部颜色*/
+            height:35px;/*高度为35px*/
+        }
+        td{
+            width:25%;
+            text-align:center; /*文字居中*/
+        }
+    </style>
+    <title>Dongtai-Kafka靶场</title>
+</head>
+<body>
+    <div>
+        <h1>Dongtai-Kafka靶场</h1>
+
+        <h2>Go --kafka-- Java </h2>
+        <table>
+            <tr class="head">
+                <th>漏洞类型</th>
+                <th>过程描述</th>
+                <th>触发方式</th>
+            </tr>
+            <tr>
+                <td>命令执行</td>
+                <td>Go生产消息 Java消费消息</td>
+                <td><u id="cmd1">Runtime.exec() 触发漏洞</u></td>
+            </tr>
+            <tr class="odd">
+                <td>命令执行</td>
+                <td>Go生产消息 Java消费消息</td>
+                <td><u id="cmd2">ProcessBuilder.start() 触发漏洞</u></td>
+            </tr>
+        </table>
+
+        <h2>Java --kafka-- Java </h2>
+        <table>
+            <tr class="head">
+                <th>漏洞类型</th>
+                <th>过程描述</th>
+                <th>触发方式</th>
+            </tr>
+            <tr>
+                <td>命令执行</td>
+                <td>Java生产消息 Java消费消息</td>
+                <td><u id="cmd3">Runtime.exec() 触发漏洞</u></td>
+            </tr>
+            <tr class="odd">
+                <td>命令执行</td>
+                <td>Java生产消息 Java消费消息</td>
+                <td><u id="cmd4">ProcessBuilder.start() 触发漏洞</u></td>
+            </tr>
+        </table>
+
+
+    </div>
+
+    <script>
+        const xhr = new XMLHttpRequest();
+        const host = "127.0.0.1";
+        cmd1.onclick = () =>{
+            xhr.open("get","http://" + host + ":8811/kafka/publish?message=whoami")
+            xhr.onload = function(){
+                alert(xhr.responseText)
+            }
+            xhr.send()
+        }
+
+        cmd2.onclick = () =>{
+            xhr.open("get","http://" + host + ":8811/kafka/publish?message=whoami&topic=addUserV3")
+            xhr.onload = function(){
+                alert(xhr.responseText)
+            }
+            xhr.send()
+        }
+
+        cmd3.onclick = () =>{
+            xhr.open("get","http://" + host + ":8810/kafka/publish?message=whoami")
+            xhr.onload = function(){
+                alert(xhr.responseText)
+            }
+            xhr.send()
+        }
+
+        cmd4.onclick = () =>{
+            xhr.open("get","http://" + host + ":8810/kafka/publish?message=whoami&topic=addUserV3")
+            xhr.onload = function(){
+                alert(xhr.responseText)
+            }
+            xhr.send()
+        }
+    </script>
+</body>
+</html>
