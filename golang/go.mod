@@ -3,7 +3,7 @@ module kafkademo
 go 1.17
 
 require (
-	github.com/HXSecurity/DongTai-agent-go v0.3.7
+	github.com/HXSecurity/DongTai-agent-go v0.4.0
 	github.com/segmentio/kafka-go v0.4.31
 	github.com/sirupsen/logrus v1.8.1
 )
